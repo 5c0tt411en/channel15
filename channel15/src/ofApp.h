@@ -38,7 +38,7 @@ class ofApp : public ofBaseApp{
     float value;
     vector <string> items;
     char address;
-    int visual = 2;
+    int visual = 1;
     
     //fft
     ofxFFTLive fft;
