@@ -12,6 +12,8 @@
 #include "v07.h"
 #include "v08.h"
 
+class v01;
+
 #define PORT 12345
 
 class ofApp : public ofBaseApp{
@@ -21,17 +23,10 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+        void drawTargetFreq(string targetName, int freq, ofColor &rgb);
     
     //OSC
     ofxOscReceiver receiver;
@@ -43,12 +38,14 @@ class ofApp : public ofBaseApp{
     //fft
     ofxFFTLive fft;
     float   audioThreshold,
+    audioLevel01,
+    audioLevel02,
     audioPeakDecay,
     audioMaxDecay,
     dbMin, kbbMin,
     dbMax, kbbMax;
     bool    audioReactiveDB, audioReactiveKBB;
-    int     dbTargetFreq, kbbTargetFreq,
+    int     targetFreq01, targetFreq02,
     guiWidth = 150;
     const int fftW = OFX_FFT_WIDTH,
     fftH = OFX_FFT_HEIGHT,
@@ -56,6 +53,7 @@ class ofApp : public ofBaseApp{
     fftY = ofGetHeight() - fftH - 10,
     guiW = 174,
     guiH = 150;
+    ofColor col01, col02;
     
     //visuals
     v01* v01_;

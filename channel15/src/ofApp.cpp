@@ -2,8 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
-    ofBackground(0);
+    ofBackground(255
+                 );
     ofSetVerticalSync(true);
     
     //OSC
@@ -11,23 +11,33 @@ void ofApp::setup(){
     
     //ofxFFT
     fft.setup();
+    col01.r = 251;
+    col01.g = 89;
+    col01.b = 101;
+    col02.r = 39;
+    col02.g = 108;
+    col02.b = 185;
+    audioThreshold = 0.92;
+    audioPeakDecay = 0.96;
+    audioMaxDecay = 0.97;
+    targetFreq01 = 500;
     
     //visuals
     v01_ = new v01();
-    v01_->setup();
     v02_ = new v02();
-    v02_->setup();
     v03_ = new v03();
-    v03_->setup();
     v04_ = new v04();
-    v04_->setup();
     v05_ = new v05();
-    v05_->setup();
     v06_ = new v06();
-    v06_->setup();
     v07_ = new v07();
-    v07_->setup();
     v08_ = new v08();
+    v01_->setup();
+    v02_->setup();
+    v03_->setup();
+    v04_->setup();
+    v05_->setup();
+    v06_->setup();
+    v07_->setup();
     v08_->setup();
 }
 
@@ -43,15 +53,14 @@ void ofApp::update(){
     fft.getFftPeakData(audioData, num);
     for (int i = 0; i < num; i++) float audioValue = audioData[i];
     if (audioReactiveDB) {
-//        dbLevel = audioData[dbTargetFreq];
-//        dbLevel = ofMap(dbLevel, 0.0, 1.0, dbMin, dbMax);
-//        while (dbLevel > dbMax) dbLevel = dbMax;
+        audioLevel01 = audioData[targetFreq01];
+        while (audioLevel01 > dbMax) audioLevel01 = 1.0;
     }
-    if (audioReactiveKBB) {
+//    if (audioReactiveKBB) {
 //        kbbLevel = audioData[kbbTargetFreq];
 //        kbbLevel = ofMap(kbbLevel, 0.0, 1.0, kbbMin, kbbMax);
 //        while (kbbLevel > kbbMax) kbbLevel = kbbMax;
-    }
+//    }
     delete[] audioData;
     
     ///OSC
@@ -115,14 +124,12 @@ void ofApp::update(){
         default:
             break;
     }
+    cout << audioLevel01 << '\n';
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofDrawBitmapString("fps: " + ofToString((int)ofGetFrameRate()), 20, 20);
-    //ofxFFT
-    ofSetColor(255);
-    fft.draw(fftX, fftY, fftW, fftH);
     
     switch (visual) {
         case 1: v01_->draw(); break;
@@ -136,46 +143,19 @@ void ofApp::draw(){
         default:
             break;
     }
+    //ofxFFT
+//    ofSetColor(255);
+//    fft.draw(fftX, fftY, fftW, fftH);
+//    drawTargetFreq("01", targetFreq01, col01);
+//    drawTargetFreq("02", targetFreq02, col02);
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
+void ofApp::drawTargetFreq(string targetName, int freq, ofColor &rgb){
+    ofSetColor(rgb);
+    ofDrawLine(fftX + (float)freq / 42.96825, fftY, fftX + (float)freq / 42.96825, fftY + fftH);
+    targetName += '\n' + ofToString(freq) + "Hz";
+    ofDrawBitmapString(targetName, fftX + (float)freq / (22000 / 512) + 5, fftY + fftH / 2);
 }
 
 //--------------------------------------------------------------

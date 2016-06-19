@@ -55,6 +55,7 @@ void v02::update(){
 }
 
 void v02::draw(){
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
     ofColor cyan = ofColor::fromHex(0x00abec);
     ofColor magenta = ofColor::fromHex(0xec008c);
     ofColor yellow = ofColor::fromHex(0xffee00);
