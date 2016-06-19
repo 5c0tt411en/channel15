@@ -3,9 +3,6 @@ openFrameworks project repository for channel15.
 
 ## Requirements
 - openFrameworks 0.9.3+
-- ofxUI
-- ofxVectorGraphics
-- ofxXmlSettings
 
 ## Copyright
 Copyright 2016-, Scott Allen([scottallen.ws](http://scottallen.ws)).  

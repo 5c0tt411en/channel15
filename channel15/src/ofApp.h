@@ -13,8 +13,21 @@
 #include "v08.h"
 
 class v01;
+class v02;
+class v03;
+class v04;
+class v05;
+class v06;
+class v07;
+class v08;
 
 #define PORT 12345
+//parameters
+extern float    a01, a02, a03, a04, a05, a06, a07, a08, a09, a10,
+                b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
+                c01, c02, c03, c04, c05, c06, c07, c08, c09, c10;
+extern float    audioLevel01,
+                audioLevel02;
 
 class ofApp : public ofBaseApp{
 
@@ -38,13 +51,10 @@ class ofApp : public ofBaseApp{
     //fft
     ofxFFTLive fft;
     float   audioThreshold,
-    audioLevel01,
-    audioLevel02,
     audioPeakDecay,
     audioMaxDecay,
     dbMin, kbbMin,
     dbMax, kbbMax;
-    bool    audioReactiveDB, audioReactiveKBB;
     int     targetFreq01, targetFreq02,
     guiWidth = 150;
     const int fftW = OFX_FFT_WIDTH,
@@ -64,8 +74,4 @@ class ofApp : public ofBaseApp{
     v06* v06_;
     v07* v07_;
     v08* v08_;
-    //parameters
-    float   a01, a02, a03, a04, a05, a06, a07, a08, a09, a10,
-            b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
-            c01, c02, c03, c04, c05, c06, c07, c08, c09, c10;
 };

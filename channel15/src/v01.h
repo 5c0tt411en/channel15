@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "ofMain.h"
 #include "ofApp.h"
-class ofApp;
+
 class v01 {
 public:
     v01();
@@ -26,7 +26,8 @@ public:
     ofVec3f rbPt;
     int pointSize = 500,
         r         = 300;
-    ofApp* ofapp_;
+    
+    float test;
 };
 
 #endif /* defined(__channel15__v01__) */

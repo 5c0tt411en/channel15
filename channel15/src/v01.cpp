@@ -13,7 +13,6 @@ v01::v01(){
 }
 
 void v01::setup(){
-    ofapp_ = new ofApp();
     ofSetLogLevel(OF_LOG_VERBOSE);
     
     shader.setGeometryInputType(GL_LINES);
@@ -40,11 +39,11 @@ void v01::update(){
         rbPt.x = ofNoise(0.6 * (i + ofGetFrameNum()));
         rbPt.y = ofNoise(0.75 * (i + ofGetFrameNum()));
         rbPt.z = -0.1 * (i + ofGetFrameNum()) + pointSize / 20;
-        rbPt.x = ofMap(rbPt.x, 0, 1, ofGetWidth() / 2 + r * 0.8 * sin(0.1 * (i + ofGetFrameNum())), ofGetWidth() / 2 + r * sin(0.1 * (i + ofGetFrameNum())) * (1 + ofapp_->audioLevel01));
-        rbPt.y = ofMap(rbPt.y, 0, 1, ofGetHeight() / 2 + r * 0.8 * cos(0.1 * (i + ofGetFrameNum())), ofGetHeight() / 2 + r * cos(0.1 * (i + ofGetFrameNum())) * (1 + ofapp_->audioLevel01));
+        rbPt.x = ofMap(rbPt.x, 0, 1, ofGetWidth() / 2 + r * 0.8 * sin(0.1 * (i + ofGetFrameNum())), ofGetWidth() / 2 + r * sin(0.1 * (i + ofGetFrameNum())) * (1 + audioLevel01));
+        rbPt.y = ofMap(rbPt.y, 0, 1, ofGetHeight() / 2 + r * 0.8 * cos(0.1 * (i + ofGetFrameNum())), ofGetHeight() / 2 + r * cos(0.1 * (i + ofGetFrameNum())) * (1 + audioLevel01));
         points.push_back(rbPt);
     }
-//    cout << ofapp_->audioLevel01 << '\n';
+    cout << audioLevel01 << '\n';
 }
 
 void v01::draw(){

@@ -1,9 +1,15 @@
 #include "ofApp.h"
 
+//parameters
+float   a01, a02, a03, a04, a05, a06, a07, a08, a09, a10,
+        b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
+        c01, c02, c03, c04, c05, c06, c07, c08, c09, c10;
+float    audioLevel01,
+audioLevel02;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(255
-                 );
+    ofBackground(255);
     ofSetVerticalSync(true);
     
     //OSC
@@ -52,15 +58,8 @@ void ofApp::update(){
     float * audioData = new float[num];
     fft.getFftPeakData(audioData, num);
     for (int i = 0; i < num; i++) float audioValue = audioData[i];
-    if (audioReactiveDB) {
-        audioLevel01 = audioData[targetFreq01];
-        while (audioLevel01 > dbMax) audioLevel01 = 1.0;
-    }
-//    if (audioReactiveKBB) {
-//        kbbLevel = audioData[kbbTargetFreq];
-//        kbbLevel = ofMap(kbbLevel, 0.0, 1.0, kbbMin, kbbMax);
-//        while (kbbLevel > kbbMax) kbbLevel = kbbMax;
-//    }
+    audioLevel01 = audioData[targetFreq01];
+//    while (audioLevel01 > dbMax) audioLevel01 = 1.0;
     delete[] audioData;
     
     ///OSC
@@ -124,7 +123,7 @@ void ofApp::update(){
         default:
             break;
     }
-    cout << audioLevel01 << '\n';
+//    cout << v01_->rbPt.x << '\n';
 }
 
 //--------------------------------------------------------------
