@@ -10,6 +10,7 @@ audioLevel02;
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(255);
+    ofSetWindowPosition(-1500, 0); //debug
     ofSetVerticalSync(true);
     
     //OSC
@@ -23,9 +24,9 @@ void ofApp::setup(){
     col02.r = 39;
     col02.g = 108;
     col02.b = 185;
-    audioThreshold = 0.92;
-    audioPeakDecay = 0.96;
-    audioMaxDecay = 0.97;
+    audioThreshold = 0.90;
+    audioPeakDecay = 0.97;
+    audioMaxDecay = 0.99;
     targetFreq01 = 500;
     
     //visuals
@@ -71,36 +72,36 @@ void ofApp::update(){
         address = ofToChar(items.back());
         cout << address << '\n';
         switch (address) {
-            case 'a' : value = a01; break;
-            case 'b' : value = a02; break;
-            case 'c' : value = a03; break;
-            case 'd' : value = a04; break;
-            case 'e' : value = a05; break;
-            case 'f' : value = a06; break;
-            case 'g' : value = a07; break;
-            case 'h' : value = a08; break;
-            case 'i' : value = a09; break;
-            case 'j' : value = a10; break;
-            case 'k' : value = b01; break;
-            case 'l' : value = b02; break;
-            case 'm' : value = b03; break;
-            case 'n' : value = b04; break;
-            case 'o' : value = b05; break;
-            case 'p' : value = b06; break;
-            case 'q' : value = b07; break;
-            case 'r' : value = b08; break;
-            case 's' : value = b09; break;
-            case 't' : value = b10; break;
-            case 'u' : value = c01; break;
-            case 'v' : value = c02; break;
-            case 'w' : value = c03; break;
-            case 'x' : value = c04; break;
-            case 'y' : value = c05; break;
-            case 'z' : value = c06; break;
-            case '[' : value = c07; break;
-            case ']' : value = c08; break;
-            case '_' : value = c09; break;
-            case '^' : value = c10; break;
+            case 'a' : a01 = value; break;
+            case 'b' : a02 = value; break;
+            case 'c' : a03 = value; break;
+            case 'd' : a04 = value; break;
+            case 'e' : a05 = value; break;
+            case 'f' : a06 = value; break;
+            case 'g' : a07 = value; break;
+            case 'h' : a08 = value; break;
+            case 'i' : a09 = value; break;
+            case 'j' : a10 = value; break;
+            case 'k' : b01 = value; break;
+            case 'l' : b02 = value; break;
+            case 'm' : b03 = value; break;
+            case 'n' : b04 = value; break;
+            case 'o' : b05 = value; break;
+            case 'p' : b06 = value; break;
+            case 'q' : b07 = value; break;
+            case 'r' : b08 = value; break;
+            case 's' : b09 = value; break;
+            case 't' : b10 = value; break;
+            case 'u' : c01 = value; break;
+            case 'v' : c02 = value; break;
+            case 'w' : c03 = value; break;
+            case 'x' : c04 = value; break;
+            case 'y' : c05 = value; break;
+            case 'z' : c06 = value; break;
+            case '[' : c07 = value; break;
+            case ']' : c08 = value; break;
+            case '_' : c09 = value; break;
+            case '^' : c10 = value; break;
             case '1' : visual = 1; break;
             case '2' : visual = 2; break;
             case '3' : visual = 3; break;
@@ -123,12 +124,13 @@ void ofApp::update(){
         default:
             break;
     }
-//    cout << v01_->rbPt.x << '\n';
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofDrawBitmapString("fps: " + ofToString((int)ofGetFrameRate()), 20, 20);
+//    ofDrawBitmapString("fps: " + ofToString((int)ofGetFrameRate()), 20, 20);
+    title = "fps : " + ofToString(ofGetFrameRate(),1) + " fps";
+    ofSetWindowTitle(title);
     
     switch (visual) {
         case 1: v01_->draw(); break;

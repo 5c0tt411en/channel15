@@ -24,10 +24,17 @@ public:
     bool doShader;
     vector<ofVec3f> points;
     ofVec3f rbPt;
-    int pointSize = 500,
-        r         = 300;
+    int pointSize     = 5000,
+        r             = 300,
+        lineWidth     = 100;
+    float speed       = 10,
+          rotateRate  = 5,
+          noiseRateX  = 1,
+          noiseRateY  = 1.2,
+          noiseSpeedX = 0.6,
+          noiseSpeedY = 0.75;
     
-    float test;
+//    ofEasyCam cam;
 };
 
 #endif /* defined(__channel15__v01__) */

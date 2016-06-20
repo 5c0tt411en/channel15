@@ -14,18 +14,17 @@ v01::v01(){
 
 void v01::setup(){
     ofSetLogLevel(OF_LOG_VERBOSE);
-    
     shader.setGeometryInputType(GL_LINES);
-    shader.setGeometryOutputType(GL_QUAD_STRIP);
+    shader.setGeometryOutputType(GL_POLYGON);
     shader.setGeometryOutputCount(4);
     shader.load("shaders/vert.glsl", "shaders/frag.glsl", "shaders/geom.glsl");
 
     for(int i = 0; i < pointSize; i++) {
-        rbPt.x = ofNoise(i*0.6);
-        rbPt.y = ofNoise(i*0.75);
-        rbPt.z = -i*0.1 + pointSize / 20;
-        rbPt.x = ofMap(rbPt.x, 0, 1, ofGetWidth() / 2 + r * 0.8 * sin(i * 0.1), ofGetWidth() / 2 + r * sin(i * 0.1));
-        rbPt.y = ofMap(rbPt.y, 0, 1, ofGetHeight() / 2 + r * 0.8 * cos(i * 0.1), ofGetHeight() / 2 + r * cos(i * 0.1));
+        rbPt.x = ofNoise(i * noiseSpeedX) * noiseRateX;
+        rbPt.y = ofNoise(i * noiseSpeedY) * noiseRateY;
+        rbPt.z = -i * speed * (1 + (a04 + c04 * audioLevel01)) + pointSize / 20;
+        rbPt.x = ofMap(rbPt.x, 0, 1, ofGetWidth() / 2 + r * 0.1 * sin(i * rotateRate), ofGetWidth() / 2 + r * sin(i * rotateRate));
+        rbPt.y = ofMap(rbPt.y, 0, 1, ofGetHeight() / 2 + r * 0.1 * cos(i * rotateRate), ofGetHeight() / 2 + r * cos(i * rotateRate));
         points.push_back(rbPt);
     }
     
@@ -36,35 +35,34 @@ void v01::setup(){
 void v01::update(){
     points.erase(points.begin());
     for(int i = pointSize - 1; i < pointSize; i++) {
-        rbPt.x = ofNoise(0.6 * (i + ofGetFrameNum()));
-        rbPt.y = ofNoise(0.75 * (i + ofGetFrameNum()));
-        rbPt.z = -0.1 * (i + ofGetFrameNum()) + pointSize / 20;
-        rbPt.x = ofMap(rbPt.x, 0, 1, ofGetWidth() / 2 + r * 0.8 * sin(0.1 * (i + ofGetFrameNum())), ofGetWidth() / 2 + r * sin(0.1 * (i + ofGetFrameNum())) * (1 + audioLevel01));
-        rbPt.y = ofMap(rbPt.y, 0, 1, ofGetHeight() / 2 + r * 0.8 * cos(0.1 * (i + ofGetFrameNum())), ofGetHeight() / 2 + r * cos(0.1 * (i + ofGetFrameNum())) * (1 + audioLevel01));
+        rbPt.x = ofNoise(noiseSpeedX * (i + ofGetFrameNum())) * noiseRateX;
+        rbPt.y = ofNoise(noiseSpeedY * (i + ofGetFrameNum())) * noiseRateY;
+        rbPt.z = -speed * (1 + (a04 + c04 * audioLevel01)) * (i + ofGetFrameNum());
+        rbPt.x = ofMap(rbPt.x, 0, 1, ofGetWidth() / 2 + r * 0.1 * sin(rotateRate * (i + ofGetFrameNum())), ofGetWidth() / 2 + r * sin(rotateRate * (i + ofGetFrameNum())) * (1 + (a01 + c01 * audioLevel01)));
+        rbPt.y = ofMap(rbPt.y, 0, 1, ofGetHeight() / 2 + r * 0.1 * cos(rotateRate * (i + ofGetFrameNum())), ofGetHeight() / 2 + r * cos(rotateRate * (i + ofGetFrameNum())) * (1 + (a02 + c02 * audioLevel01)));
         points.push_back(rbPt);
     }
-    cout << audioLevel01 << '\n';
 }
 
 void v01::draw(){
+//    cam.begin();
+    ofNoFill();
     ofSetColor(100, 160, 120);
     ofPushMatrix();
     if(doShader) {
         shader.begin();
         
         // set thickness of ribbons
-        shader.setUniform1f("thickness", 1);
+        shader.setUniform1f("thickness", 1 + lineWidth * (a03 + c03 * audioLevel01));
         
         // make light direction slowly rotate
         shader.setUniform3f("lightDir", sin(ofGetElapsedTimef()/10), cos(ofGetElapsedTimef()/10), 0);
     }
-
-//    ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2, 0);
-    ofRotateX(ofGetMouseX());
-    ofRotateY(ofGetMouseY());
+    ofTranslate(0, 0, ofGetFrameNum() * speed * (1 + (a04 + c04 * audioLevel01)) + pointSize);
     for(unsigned int i=1; i<points.size(); i++) {
         ofDrawLine(points[i-1], points[i]);
     }
     if(doShader) shader.end();
     ofPopMatrix();
+//    cam.end();
 }

@@ -22,6 +22,7 @@ class v07;
 class v08;
 
 #define PORT 12345
+
 //parameters
 extern float    a01, a02, a03, a04, a05, a06, a07, a08, a09, a10,
                 b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
@@ -74,4 +75,6 @@ class ofApp : public ofBaseApp{
     v06* v06_;
     v07* v07_;
     v08* v08_;
+    
+    string title;
 };
