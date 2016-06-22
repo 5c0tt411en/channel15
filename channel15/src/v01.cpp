@@ -21,7 +21,7 @@ void v01::setup(){
     shader.setGeometryOutputType(GL_POLYGON);
     shader.setGeometryOutputCount(4);
     shader.load("shaders/vert.glsl", "shaders/frag.glsl", "shaders/geom.glsl");
-
+    
     for(int i = 0; i < pointSize; i++) {
         rbPt.x = ofNoise(i * noiseSpeedX) * noiseRateX;
         rbPt.y = ofNoise(i * noiseSpeedY) * noiseRateY;
@@ -36,8 +36,8 @@ void v01::setup(){
 }
 
 void v01::update(){
-//    light.lookAt(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2, 0));
-//    light.setPosition(ofVec3f(ofGetWidth() / 2 -100, ofGetHeight() / 2 - 100, 0));
+    //    light.lookAt(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2, 0));
+    //    light.setPosition(ofVec3f(ofGetWidth() / 2 -100, ofGetHeight() / 2 - 100, 0));
     
     pointToView.x = ofGetWidth() / 2 + 100 * sin(ofGetElapsedTimef() * 0.5);
     pointToView.y = ofGetHeight() / 2 + 100 * sin(ofGetElapsedTimef() * 0.35);
@@ -58,15 +58,14 @@ void v01::update(){
 }
 
 void v01::draw(){
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     cam.lookAt(node.getPosition());
     cam.begin();
-    ofDrawAxis(100);
-    ofSetColor(0, 255, 0);
-    node.draw();
+//    node.draw();
     ofSetColor(0, 255, 255);
     ofDrawLine(cam.getPosition(),node.getPosition());
     
-//    ofNoFill();
+    //    ofNoFill();
     ofSetColor(100, 160, 120);
     ofPushMatrix();
     if(doShader) {

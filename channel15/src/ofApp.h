@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 #include "ofxFFTLive.h"
+#include "ofxSyphon.h"
 #include "v01.h"
 #include "v02.h"
 #include "v03.h"
@@ -21,26 +22,26 @@ class v06;
 class v07;
 class v08;
 
-#define PORT 12345
+#define PORT 8888
 
 //parameters
 extern float    a01, a02, a03, a04, a05, a06, a07, a08, a09, a10,
-                b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
-                c01, c02, c03, c04, c05, c06, c07, c08, c09, c10;
+b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
+c01, c02, c03, c04, c05, c06, c07, c08, c09, c10;
 extern float    audioLevel01,
-                audioLevel02;
+audioLevel02;
 
 class ofApp : public ofBaseApp{
-
-	public:
-		void setup();
-		void update();
-		void draw();
-
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-        void drawTargetFreq(string targetName, int freq, ofColor &rgb);
+    
+public:
+    void setup();
+    void update();
+    void draw();
+    
+    void windowResized(int w, int h);
+    void dragEvent(ofDragInfo dragInfo);
+    void gotMessage(ofMessage msg);
+    void drawTargetFreq(string targetName, int freq, ofColor &rgb); 
     
     //OSC
     ofxOscReceiver receiver;
@@ -77,4 +78,7 @@ class ofApp : public ofBaseApp{
     v08* v08_;
     
     string title;
+    
+    //Syphon
+    ofxSyphonServer mainOutputSyphonServer;
 };

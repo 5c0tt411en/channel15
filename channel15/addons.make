@@ -1,2 +1,3 @@
 ofxFFT
 ofxOsc
+ofxSyphon

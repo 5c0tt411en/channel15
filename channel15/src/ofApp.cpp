@@ -2,18 +2,20 @@
 
 //parameters
 float   a01, a02, a03, a04, a05, a06, a07, a08, a09, a10,
-        b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
-        c01, c02, c03, c04, c05, c06, c07, c08, c09, c10;
+b01, b02, b03, b04, b05, b06, b07, b08, b09, b10,
+c01, c02, c03, c04, c05, c06, c07, c08, c09, c10;
 float    audioLevel01,
 audioLevel02;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetWindowPosition(-1500, 0); //debug
     ofSetVerticalSync(true);
     
     //OSC
     receiver.setup(PORT);
+    
+    //Syphon
+    mainOutputSyphonServer.setName("channel15");
     
     //ofxFFT
     fft.setup();
@@ -59,7 +61,7 @@ void ofApp::update(){
     fft.getFftPeakData(audioData, num);
     for (int i = 0; i < num; i++) float audioValue = audioData[i];
     audioLevel01 = audioData[targetFreq01];
-//    while (audioLevel01 > dbMax) audioLevel01 = 1.0;
+    //    while (audioLevel01 > dbMax) audioLevel01 = 1.0;
     delete[] audioData;
     
     ///OSC
@@ -112,7 +114,7 @@ void ofApp::update(){
         }
     }
     switch (visual) {
-        case 1: v01_->update(); break;
+        case 1: v01_->update(); v04_->update(); break;
         case 2: v02_->update(); break;
         case 3: v03_->update(); break;
         case 4: v04_->update(); break;
@@ -134,7 +136,7 @@ void ofApp::draw(){
     ofSetWindowTitle(title);
     
     switch (visual) {
-        case 1: v01_->draw(); break;
+        case 1: v01_->draw(); v04_->draw(); break;
         case 2: v02_->draw(); break;
         case 3: v03_->draw(); break;
         case 4: v04_->draw(); break;
@@ -146,10 +148,13 @@ void ofApp::draw(){
             break;
     }
     //ofxFFT
-//    ofSetColor(255);
-//    fft.draw(fftX, fftY, fftW, fftH);
-//    drawTargetFreq("01", targetFreq01, col01);
-//    drawTargetFreq("02", targetFreq02, col02);
+    //    ofSetColor(255);
+    //    fft.draw(fftX, fftY, fftW, fftH);
+    //    drawTargetFreq("01", targetFreq01, col01);
+    //    drawTargetFreq("02", targetFreq02, col02);
+    
+    //Syphon
+    mainOutputSyphonServer.publishScreen();
 }
 
 //--------------------------------------------------------------
@@ -162,15 +167,15 @@ void ofApp::drawTargetFreq(string targetName, int freq, ofColor &rgb){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::dragEvent(ofDragInfo dragInfo){
+    
 }
