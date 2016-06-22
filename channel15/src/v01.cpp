@@ -13,6 +13,7 @@ v01::v01(){
 }
 
 void v01::setup(){
+    ofSetSmoothLighting(true);
     cam.setPosition(ofGetWidth() / 2, ofGetHeight() / 2, 100);
     pointToView = ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2, 0);
     ofSetLogLevel(OF_LOG_VERBOSE);
@@ -35,6 +36,9 @@ void v01::setup(){
 }
 
 void v01::update(){
+//    light.lookAt(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2, 0));
+//    light.setPosition(ofVec3f(ofGetWidth() / 2 -100, ofGetHeight() / 2 - 100, 0));
+    
     pointToView.x = ofGetWidth() / 2 + 100 * sin(ofGetElapsedTimef() * 0.5);
     pointToView.y = ofGetHeight() / 2 + 100 * sin(ofGetElapsedTimef() * 0.35);
     pointToView.z = 100 * sin(ofGetElapsedTimef() * 0.4);
@@ -56,26 +60,22 @@ void v01::update(){
 void v01::draw(){
     cam.lookAt(node.getPosition());
     cam.begin();
-    ofDrawAxis(1000);
-    ofSetColor(255, 0, 0);
-    cam.draw();
+    ofDrawAxis(100);
     ofSetColor(0, 255, 0);
     node.draw();
     ofSetColor(0, 255, 255);
     ofDrawLine(cam.getPosition(),node.getPosition());
     
-    
-    ofNoFill();
+//    ofNoFill();
     ofSetColor(100, 160, 120);
     ofPushMatrix();
     if(doShader) {
         shader.begin();
-        
         // set thickness of ribbons
         shader.setUniform1f("thickness", 1 + lineWidth * (a03 + c03 * audioLevel01));
         
         // make light direction slowly rotate
-        shader.setUniform3f("lightDir", sin(ofGetElapsedTimef()/10), cos(ofGetElapsedTimef()/10), 0);
+        shader.setUniform3f("lightDir", sin(ofGetElapsedTimef()/10), cos(ofGetElapsedTimef()/10), 0.5 * cos(ofGetElapsedTimef()/10)/*ofGetWidth() / 2, ofGetHeight() / 2, -1000*/);
     }
     ofTranslate(0, 0, ofGetFrameNum() * speed * (0.1 + (a04 + c04 * audioLevel01)) + pointSize);
     for(unsigned int i=1; i<points.size(); i++) {

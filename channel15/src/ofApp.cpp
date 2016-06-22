@@ -9,7 +9,6 @@ audioLevel02;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(255);
     ofSetWindowPosition(-1500, 0); //debug
     ofSetVerticalSync(true);
     
@@ -128,7 +127,9 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-//    ofDrawBitmapString("fps: " + ofToString((int)ofGetFrameRate()), 20, 20);
+    ofColor col01 = ofColor(90, 224, 189);
+    ofColor col02 = ofColor(0, 127, 60);
+    ofBackgroundGradient(col01, col02, OF_GRADIENT_CIRCULAR);
     title = "fps : " + ofToString(ofGetFrameRate(),1) + " fps";
     ofSetWindowTitle(title);
     
