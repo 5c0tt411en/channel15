@@ -11,11 +11,15 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include "ofxAssimpModelLoader.h"
 class v06 {
 public:
     v06();
     void setup();
     void update();
     void draw();
+    
+    ofxAssimpModelLoader model;
+    ofLight light;
 };
 #endif /* defined(__channel15__v06__) */

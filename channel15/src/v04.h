@@ -22,8 +22,6 @@ public:
     void update();
     void draw();
     
-    ofShader shader;
-    bool doShader;
     vector<ofVec3f> points;
     ofVec3f rbPt;
     int     r             = 300,

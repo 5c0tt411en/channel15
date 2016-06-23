@@ -114,8 +114,8 @@ void ofApp::update(){
         }
     }
     switch (visual) {
-        case 1: v01_->update(); v04_->update(); break;
-        case 2: v02_->update(); break;
+        case 1: v01_->update(); v03_->update(); v04_->update(); v05_->update(); break;
+        case 2: v01_->update(); v03_->update(); v04_->update(); v05_->update(); break;
         case 3: v03_->update(); break;
         case 4: v04_->update(); break;
         case 5: v05_->update(); break;
@@ -136,8 +136,9 @@ void ofApp::draw(){
     ofSetWindowTitle(title);
     
     switch (visual) {
-        case 1: v01_->draw(); v04_->draw(); break;
-        case 2: v02_->draw(); break;
+        case 1: v01_->draw(); v03_->draw(); v04_->draw(); v05_->draw(); break;
+        case 2: v01_->draw(); v03_->draw(); v04_->draw(); v05_->draw();
+                if (audioLevel01 > b03) v03_->drawMode = ofRandom(1 + b01 * 3, 1 + b02 * 4); break;
         case 3: v03_->draw(); break;
         case 4: v04_->draw(); break;
         case 5: v05_->draw(); break;
@@ -147,14 +148,24 @@ void ofApp::draw(){
         default:
             break;
     }
-    //ofxFFT
-    //    ofSetColor(255);
-    //    fft.draw(fftX, fftY, fftW, fftH);
-    //    drawTargetFreq("01", targetFreq01, col01);
-    //    drawTargetFreq("02", targetFreq02, col02);
-    
     //Syphon
     mainOutputSyphonServer.publishScreen();
+    string debugString = "audio01: " + ofToString(audioLevel01) + '\n';
+           debugString += "pmRate : " + ofToString(v03_->pmRate) + '\n';
+           debugString += "mode    : " + ofToString(v03_->modeSelect) + '\n';
+    debugString += "tfJudge   : ";
+    for (int i = 0; i < 20; i++) {
+        i != 19 ? debugString += ofToString(v03_->b[i]) + ", " : debugString += ofToString(v03_->b[i]) + '\n';
+    }
+    debugString += "rate      : ";
+    for (int i = 0; i < 20; i++) {
+        i != 19 ? debugString += ofToString(v03_->rate[i]) + ", " : debugString += ofToString(v03_->rate[i]) + '\n';
+    }
+           debugString += "ptAll   : " + ofToString(v03_->ptAll) + '\n';
+    for (int i = 0; i < 20; i++) {
+           debugString += "pt[" + ofToString(i) + "]   : " + ofToString(v03_->x[i]) + ", " + ofToString(v03_->y[i]) + ", " + ofToString(v03_->z[i]) + '\n';
+    }
+    ofDrawBitmapStringHighlight(debugString, 20, 20);
 }
 
 //--------------------------------------------------------------

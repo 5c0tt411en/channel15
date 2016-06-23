@@ -1,3 +1,4 @@
+ofxAssimpModelLoader
 ofxFFT
 ofxOsc
 ofxSyphon
