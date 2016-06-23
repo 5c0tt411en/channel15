@@ -13,6 +13,8 @@
 #include "ofMain.h"
 #include "ofApp.h"
 
+#define POINT_SIZE 500
+
 class v04 {
 public:
     v04();
@@ -24,8 +26,7 @@ public:
     bool doShader;
     vector<ofVec3f> points;
     ofVec3f rbPt;
-    int pointSize     = 500,
-    r             = 10,
+    int     r             = 300,
     lineWidth     = 100;
     float speed       = 50,
     rotateRate  = 1,
@@ -33,9 +34,20 @@ public:
     noiseRateY  = 1.2,
     noiseSpeedX = 0.6,
     noiseSpeedY = 0.75;
+    float transZ;
     
     ofCamera cam;
     ofVec3f pointToView;
     ofNode node;
+    
+    ofImage sparkImg;
+    int     width, height;
+    int     imgWidth, imgHeight;
+    int     numParticles;
+    int     textureRes;
+    
+    ofVbo vbo;
+    ofVec3f verts[POINT_SIZE];
+    ofFloatColor color[POINT_SIZE];
 };
 #endif /* defined(__channel15__v04__) */

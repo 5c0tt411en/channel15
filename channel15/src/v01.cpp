@@ -61,7 +61,7 @@ void v01::draw(){
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     cam.lookAt(node.getPosition());
     cam.begin();
-//    node.draw();
+    node.draw();
     ofSetColor(0, 255, 255);
     ofDrawLine(cam.getPosition(),node.getPosition());
     
