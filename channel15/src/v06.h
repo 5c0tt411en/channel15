@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include "ofMain.h"
 #include "ofxAssimpModelLoader.h"
+#include "ofApp.h"
+
 class v06 {
 public:
     v06();
@@ -20,6 +22,7 @@ public:
     void draw();
     
     ofxAssimpModelLoader model;
-    ofLight light;
+    
+    int drawMode = 2;
 };
 #endif /* defined(__channel15__v06__) */

@@ -22,8 +22,7 @@ void v06::update(){
 }
 
 void v06::draw(){
-//    light.enable();
-    ofSetColor(255, 255, 255, 255);
+    ofSetColor(255, 255, 255, b08);
     //get the model attributes we need
     ofVec3f scale = model.getScale();
     ofVec3f position = model.getPosition();
@@ -60,14 +59,31 @@ void v06::draw(){
         verts[i].z += ofSignedNoise(verts[i].y/liquidness, verts[i].z/liquidness,verts[i].x/liquidness, ofGetElapsedTimef()/speedDampen)*amplitude;
     }
     
+    glPointSize(10);
+    
     //draw the model manually
     if(bHasTexture) texture.bind();
     material.begin();
     //mesh.drawWireframe(); //you can draw wireframe too
-    mesh.drawFaces();
+    switch (drawMode) {
+        case 1:
+            mesh.drawWireframe();
+            break;
+        case 2:
+            mesh.drawFaces();
+            break;
+        case 3:
+            mesh.drawVertices();
+            break;
+        case 4:
+            mesh.drawWireframe();
+            mesh.drawVertices();
+            break;
+        default:
+            break;
+    }
     material.end();
     if(bHasTexture) texture.unbind();
     
     ofPopMatrix();
-//    light.disable();
 }

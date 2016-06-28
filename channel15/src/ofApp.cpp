@@ -114,8 +114,8 @@ void ofApp::update(){
         }
     }
     switch (visual) {
-        case 1: v01_->update(); v03_->update(); v04_->update(); v05_->update(); break;
-        case 2: v01_->update(); v03_->update(); v04_->update(); v05_->update(); break;
+        case 1: v01_->update(); v03_->update(); v04_->update(); v05_->update(); /*v06_->update();*/ break;
+        case 2: v01_->update(); v03_->update(); v04_->update(); v05_->update(); /*v06_->update();*/ break;
         case 3: v03_->update(); break;
         case 4: v04_->update(); break;
         case 5: v05_->update(); break;
@@ -129,15 +129,15 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofColor col01 = ofColor(90, 224, 189);
-    ofColor col02 = ofColor(0, 127, 60);
+    ofColor col01 = ofColor(60, 112, 100);
+    ofColor col02 = ofColor(0, 64, 30);
     ofBackgroundGradient(col01, col02, OF_GRADIENT_CIRCULAR);
     title = "fps : " + ofToString(ofGetFrameRate(),1) + " fps";
     ofSetWindowTitle(title);
     
     switch (visual) {
-        case 1: v01_->draw(); v03_->draw(); v04_->draw(); v05_->draw(); break;
-        case 2: v01_->draw(); v03_->draw(); v04_->draw(); v05_->draw();
+        case 1: v01_->draw(); v03_->draw(); v04_->draw(); v05_->draw(); /*v06_->draw();*/ break;
+        case 2: v01_->draw(); v03_->draw(); v04_->draw(); v05_->draw(); /*v06_->draw();*/
                 if (audioLevel01 > b03) v03_->drawMode = ofRandom(1 + b01 * 3, 1 + b02 * 4); break;
         case 3: v03_->draw(); break;
         case 4: v04_->draw(); break;
